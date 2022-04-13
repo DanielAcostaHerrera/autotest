@@ -9,8 +9,8 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 
 @Module({
   imports: [
-    /*TypeOrmModule.forRoot(DatabaseConfig),
-    UsuariosModule*/
+    TypeOrmModule.forRoot(DatabaseConfig),
+    UsuariosModule
   ],
   controllers: [AppController],
   providers: [AppService],
