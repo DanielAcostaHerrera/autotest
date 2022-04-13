@@ -1,0 +1,32 @@
+options:
+  docker: true
+
+image: node:16
+pipelines:
+  branches:
+    qa:
+      - step:
+         name: Deployment
+         image: google/cloud-sdk:latest
+         caches:
+         - docker
+         deployment: qa
+         script:
+          - echo ${KEY_FILE_AUTH} | base64 --decode --ignore-garbage > /tmp/gcloud-api.json
+          - gcloud auth activate-service-account --key-file /tmp/gcloud-api.json
+          - gcloud config set project ${PROJECT_ID}
+          - gcloud builds submit --tag southamerica-west1-docker.pkg.dev/esachs-dev/cloud-run-source-deploy/esachs-qa
+          - gcloud beta run deploy esachs-qa --image southamerica-west1-docker.pkg.dev/esachs-dev/cloud-run-source-deploy/esachs-qa --platform managed --region southamerica-west1 --allow-unauthenticated
+    develop:
+      - step:
+         name: Deployment
+         image: google/cloud-sdk:latest
+         caches:
+         - docker
+         deployment: develop
+         script:
+          - echo ${KEY_FILE_AUTH} | base64 --decode --ignore-garbage > /tmp/gcloud-api.json
+          - gcloud auth activate-service-account --key-file /tmp/gcloud-api.json
+          - gcloud config set project ${PROJECT_ID}
+          - gcloud builds submit --tag southamerica-west1-docker.pkg.dev/esachs-dev/cloud-run-source-deploy/esachs-dev
+          - gcloud beta run deploy esachs-dev --image southamerica-west1-docker.pkg.dev/esachs-dev/cloud-run-source-deploy/esachs-dev --platform managed --region southamerica-west1 --allow-unauthenticated
