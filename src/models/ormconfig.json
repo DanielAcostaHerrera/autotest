@@ -1,12 +1,12 @@
 [
   {
     "name": "default",
-    "type": "mssql",
-    "host": "localhost",
-    "port": 1433,
-    "username": "sa",
-    "password": "sa",
-    "database": "test",
+    "type": "mysql",
+    "host": "34.176.203.100",
+    "port": 3306,
+    "username": "david.daniel",
+    "password": "Entrar020296*",
+    "database": "",
     "synchronize": false,
     "entities": ["entities/*.js"]
   }
