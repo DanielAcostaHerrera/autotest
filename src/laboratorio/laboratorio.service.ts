@@ -12,7 +12,7 @@ export class LaboratorioService {
   async create(createLaboratorioDto: CreateLaboratorioDto) : Promise<Laboratorio> {
     const laboratorio = this.laboratoriosRepository.findOne({nombre: createLaboratorioDto.nombre});
 
-    if (laboratorio) {
+    if (laboratorio != null) {
       throw new UnprocessableEntityException('Ya existe un laboratorio con ese nombre.');
     }
 
@@ -33,7 +33,14 @@ export class LaboratorioService {
   }
 
   async update(id: number, updateLaboratorioDto: UpdateLaboratorioDto) : Promise<Laboratorio> {
-    const laboratorio = await this.laboratoriosRepository.findOne(id);
+     
+    let laboratorio = await this.laboratoriosRepository.findOne({nombre: updateLaboratorioDto.nombre});
+
+    if (laboratorio != null && laboratorio.idLaboratorio != id) {
+      throw new UnprocessableEntityException('Ya existe un laboratorio con ese nombre.');
+    }
+
+    laboratorio = await this.laboratoriosRepository.findOne(id);
 
     if (!laboratorio) {
       throw new NotFoundException('Laboratorio no encontrado.');

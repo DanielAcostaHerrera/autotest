@@ -12,7 +12,7 @@ export class SucursalService {
   async create(createSucursalDto: CreateSucursalDto) : Promise<Sucursal> {
     const sucursal = this.sucursalRepository.findOne({nombre: createSucursalDto.nombre});
 
-    if (sucursal) {
+    if (sucursal != null) {
       throw new UnprocessableEntityException('Ya existe una sucursal con ese nombre.');
     }
 
@@ -33,7 +33,14 @@ export class SucursalService {
   }
 
   async update(id: number, updateSucursalDto: UpdateSucursalDto) : Promise<Sucursal> {
-    const sucursal = await this.sucursalRepository.findOne(id);
+
+    let sucursal = await this.sucursalRepository.findOne({nombre: updateSucursalDto.nombre});
+
+    if (sucursal != null && sucursal.idSucursal != id) {
+      throw new UnprocessableEntityException('Ya existe una sucursal con ese nombre.');
+    }
+
+    sucursal = await this.sucursalRepository.findOne(id);
 
     if (!sucursal) {
       throw new NotFoundException('Sucursal no encontrada.');

@@ -12,7 +12,7 @@ export class TrabajadorService {
   async create(createTrabajadorDto: CreateTrabajadorDto) : Promise<Trabajador> {
     const trabajador = this.trabajadorRepository.findOne({nombre: createTrabajadorDto.nombre});
 
-    if (trabajador) {
+    if (trabajador != null) {
       throw new UnprocessableEntityException('Ya existe un trabajador con ese nombre.');
     }
 
@@ -33,7 +33,14 @@ export class TrabajadorService {
   }
 
   async update(id: number, updateTrabajadorDto: UpdateTrabajadorDto) : Promise<Trabajador> {
-    const trabajador = await this.trabajadorRepository.findOne(id);
+
+    let trabajador = await this.trabajadorRepository.findOne({nombre: updateTrabajadorDto.nombre});
+
+    if (trabajador != null && trabajador.idTrabajador != id) {
+      throw new UnprocessableEntityException('Ya existe un trabajador con ese nombre.');
+    }
+
+    trabajador = await this.trabajadorRepository.findOne(id);
 
     if (!trabajador) {
       throw new NotFoundException('Trabajador no encontrado.');

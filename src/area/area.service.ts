@@ -12,7 +12,7 @@ export class AreaService {
   async create(createAreaDto: CreateAreaDto) : Promise<Area> {
     const area = this.areasRepository.findOne({nombre: createAreaDto.nombre});
 
-    if (area) {
+    if (area != null) {
       throw new UnprocessableEntityException('Ya existe un área con ese nombre.');
     }
 
@@ -33,7 +33,14 @@ export class AreaService {
   }
 
   async update(id: number, updateAreaDto: UpdateAreaDto) : Promise<Area> {
-    const area = await this.areasRepository.findOne(id);
+    
+    let area = await this.areasRepository.findOne({nombre: updateAreaDto.nombre});
+
+    if (area != null && area.idArea != id)  {
+      throw new UnprocessableEntityException('Ya existe un área con ese nombre.');
+   }
+    
+   area = await this.areasRepository.findOne(id);
 
     if (!area) {
       throw new NotFoundException('Área no encontrada.');
