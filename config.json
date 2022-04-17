@@ -1,0 +1,18 @@
+{
+    "dev":{
+        "TYPEORM_TYPE":"mysql",
+        "TYPEORM_DATABASE":"achs-dev",
+        "TYPEORM_PORT":"3306",
+        "TYPEORM_USERNAME":"david.daniel",
+        "TYPEORM_PASSWORD":"Entrar020296*",
+        "TYPEORM_HOST":"34.176.203.100"
+    },
+    "local":{
+        "TYPEORM_TYPE":"mysql",
+        "TYPEORM_DATABASE":"achs-local",
+        "TYPEORM_PORT":"3306",
+        "TYPEORM_USERNAME":"root",
+        "TYPEORM_PASSWORD":"rootlocal",
+        "TYPEORM_HOST":"127.0.0.1"
+    }
+}
