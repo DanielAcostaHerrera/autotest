@@ -40,7 +40,7 @@ export class AreaService {
       throw new UnprocessableEntityException('Ya existe un área con ese nombre.');
    }
     
-   area = await this.areasRepository.findOne(id);
+   area = await this.findOne(id);
 
     if (!area) {
       throw new NotFoundException('Área no encontrada.');

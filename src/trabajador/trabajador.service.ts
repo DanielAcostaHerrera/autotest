@@ -20,11 +20,11 @@ export class TrabajadorService {
   }
 
   async findAll(): Promise<Trabajador[]> {
-    return await this.trabajadorRepository.find({relations:['horarios','laboratorios','trabajadorMuestras']});
+    return await this.trabajadorRepository.find({relations:['trabajadorHorarios','trabajadorLaboratorios','trabajadorMuestras']});
   }
 
   async findOne(id: number) : Promise<Trabajador> {
-    const trabajador = await this.trabajadorRepository.findOne(id,{relations:['horarios','laboratorios','trabajadorMuestras']});
+    const trabajador = await this.trabajadorRepository.findOne(id,{relations:['trabajadorHorarios','trabajadorLaboratorios','trabajadorMuestras']});
 
     if (!trabajador) {
       throw new NotFoundException('Trabajador no encontrado.');
@@ -40,7 +40,7 @@ export class TrabajadorService {
       throw new UnprocessableEntityException('Ya existe un trabajador con ese nombre.');
     }
 
-    trabajador = await this.trabajadorRepository.findOne(id);
+    trabajador = await this.findOne(id);
 
     if (!trabajador) {
       throw new NotFoundException('Trabajador no encontrado.');

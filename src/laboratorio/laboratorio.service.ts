@@ -20,11 +20,11 @@ export class LaboratorioService {
   }
 
   async findAll(): Promise<Laboratorio[]> {
-    return await this.laboratoriosRepository.find({relations:['tests','trabajadores']});
+    return await this.laboratoriosRepository.find({relations:['tests','trabajadorLaboratorios']});
   }
 
   async findOne(id: number) : Promise<Laboratorio> {
-    const laboratorio = await this.laboratoriosRepository.findOne(id,{relations:['tests','trabajadores']});
+    const laboratorio = await this.laboratoriosRepository.findOne(id,{relations:['tests','trabajadorLaboratorios']});
 
     if (!laboratorio) {
       throw new NotFoundException('Laboratorio no encontrado.');
@@ -40,7 +40,7 @@ export class LaboratorioService {
       throw new UnprocessableEntityException('Ya existe un laboratorio con ese nombre.');
     }
 
-    laboratorio = await this.laboratoriosRepository.findOne(id);
+    laboratorio = await this.findOne(id);
 
     if (!laboratorio) {
       throw new NotFoundException('Laboratorio no encontrado.');

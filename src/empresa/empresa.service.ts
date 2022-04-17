@@ -10,7 +10,7 @@ export class EmpresaService {
   constructor(@InjectRepository(Empresa) public readonly empresasRepository: Repository<Empresa>) {}
 
   async create(createEmpresaDto: CreateEmpresaDto) : Promise<Empresa> {
-    const empresa : Empresa = await this.empresasRepository.findOne({nombre: createEmpresaDto.nombre});
+    const empresa = await this.empresasRepository.findOne({nombre: createEmpresaDto.nombre});
 
     if (empresa != null)  {
       throw new UnprocessableEntityException('Ya existe una empresa con ese nombre.');
@@ -40,7 +40,7 @@ export class EmpresaService {
        throw new UnprocessableEntityException('Ya existe una empresa con ese nombre.');
     }
     
-     empresa = await this.empresasRepository.findOne(id);
+     empresa = await this.findOne(id);
 
     if (!empresa) {
       throw new NotFoundException('Empresa no encontrada.');

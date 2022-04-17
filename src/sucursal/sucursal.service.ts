@@ -40,7 +40,7 @@ export class SucursalService {
       throw new UnprocessableEntityException('Ya existe una sucursal con ese nombre.');
     }
 
-    sucursal = await this.sucursalRepository.findOne(id);
+    sucursal = await this.findOne(id);
 
     if (!sucursal) {
       throw new NotFoundException('Sucursal no encontrada.');
